@@ -1,0 +1,76 @@
+.venv/
+__pycache__/
+.mypy_cache/
+venv/
+main_plot.tex
+main_table.tex
+hnsw/data/1m/
+hnsw/data/laion1m_base.fvecs
+hnsw/data/100k/
+hnsw/logs/
+local-tests/
+hnsw/data
+hnsw/paper*
+hnsw/o_hnsw_backup.py
+hnsw/sweep
+hnsw/cluster/plaintext/log
+hnsw/exp_1k10k_ohnsw.sh
+hnsw/exp_laion1k10k_part.sh
+hnsw/export_report.sh
+hnsw/exp.sh
+
+# hnsw/plots/ is tracked -- only its generated output and the one unported
+# script stay out.
+hnsw/plots/out*
+hnsw/plots/plot_tradeoff.py
+
+# Datasets are never committed -- they are downloaded or rebuilt, not versioned.
+# These were previously untracked-but-not-ignored, which is a different thing: an
+# editor-driven `git add -A` staged them and grew .git to 118 GB of pack files
+# before it was noticed. Ignoring them makes that impossible rather than merely
+# unlikely.
+#
+# To (re)fetch: hnsw/data/msmarco/fetch.sh, hnsw/data/sift/download10m.sh, or
+# hnsw/data/download_data.sh (the last one is dead -- see hnsw/data/msmarco/fetch.sh).
+hnsw/data/laion/
+hnsw/data/sift/
+hnsw/data/tripclick/
+hnsw/data/msmarco/data/
+hnsw/data/msmarco/raw/
+hnsw/data/msmarco/*.json
+hnsw/data/keys_all_dataset.txt
+
+# Vector/graph artefacts anywhere in the tree, as a backstop for the above.
+*.fvecs
+*.ivecs
+*.bvecs
+*.u8bin
+*.index
+*.tar.gz
+
+# ...except the 1k/10k smoke-test sets and the shared LAION query file, which are
+# small, already committed, and what `./run.sh` uses out of the box. gitignore
+# does not affect already-tracked files, so these negations only matter if one is
+# ever removed and re-added -- which is exactly when the blanket rules above
+# would otherwise make it vanish silently.
+!hnsw/data/1k/
+!hnsw/data/1k/**
+!hnsw/data/10k/
+!hnsw/data/10k/**
+!hnsw/data/laion_query.fvecs
+
+# Build trees and the 269-byte GCS error page saved over a data filename.
+hnsw/build/
+hnsw/build-linux/
+hnsw/test_queries.fvecs
+
+# Machine-local experiment drivers: they hard-code absolute interpreter and
+# dataset paths for this machine, so they are not portable as committed
+# artefacts. The probe/sweep scripts that ARE committed live in the repo
+# proper -- do not add them here.
+hnsw/run_laion1m_blocksize.sh
+hnsw/run_laion1m_smallblocks.sh
+hnsw/run_msmarco_blocksize.sh
+hnsw/run_sift1m_blocksize.sh
+hnsw/run_sift1m_smallblocks.sh
+hnsw/run_tripclick_blocksize.sh
